@@ -1,16 +1,110 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { useWidgetProps } from "../use-widget-props";
+import { useOpenAiGlobal } from "../use-openai-global";
+import { Maximize2, X } from "lucide-react";
 import mockData from "./mock-data.json";
 
 function App() {
-  // 接收从服务器传来的 structuredContent 数据
-  // 如果在开发环境且没有收到数据，则使用 mock 数据
-  const receivedProps = useWidgetProps({});
-  const data = receivedProps.title ? receivedProps : mockData;
+  // toolOutput 返回的是整个 mockData 对象（包含 title, introduction, posts, conclusion）
+  // 从 server.ts 中看到：structuredContent: mockData
+  const toolOutput = useWidgetProps({});
+  const displayMode = useOpenAiGlobal("displayMode");
+  const isFullscreen = displayMode === "fullscreen";
+  //const isFullscreen = true;
+  
+  // 优先使用 toolOutput 中的数据，如果没有则使用 mockData
+  const data = (toolOutput && toolOutput.posts && Array.isArray(toolOutput.posts))
+    ? toolOutput
+    : mockData;
 
+  // 确保 data.posts 存在
+  if (!data || !data.posts || !Array.isArray(data.posts)) {
+    return (
+      <div className="antialiased w-full text-black px-4 pb-4 border border-black/10 rounded-2xl sm:rounded-3xl overflow-hidden bg-white">
+        <div className="max-w-full">
+          <div className="py-8 text-center text-black/60">
+            拿不到数据
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const firstPost = data.posts[0];
+
+  // 插入模式：只显示封面
+  if (!isFullscreen) {
+    return (
+      <div className="antialiased w-full text-black border border-black/10 rounded-2xl sm:rounded-3xl overflow-hidden bg-white relative">
+        {/* 全屏按钮 */}
+        <button
+          aria-label="Enter fullscreen"
+          className="absolute top-4 right-4 z-30 rounded-full bg-white text-black shadow-lg ring ring-black/5 p-2.5 pointer-events-auto"
+          onClick={() => {
+            if (window?.webplus?.requestDisplayMode) {
+              window.webplus.requestDisplayMode({ mode: "fullscreen" });
+            }
+          }}
+        >
+          <Maximize2
+            strokeWidth={1.5}
+            className="h-4.5 w-4.5"
+            aria-hidden="true"
+          />
+        </button>
+
+        <div className="relative">
+          {/* 封面图片 */}
+          {firstPost?.images && firstPost.images.length > 0 && (
+            <div className="relative w-full aspect-[4/3] overflow-hidden">
+              <img
+                src={firstPost.images[0]}
+                alt={data.title || "Post"}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            </div>
+          )}
+          
+          {/* 封面信息 */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+            {data.title && (
+              <h2 className="text-3xl sm:text-4xl font-bold mb-1 line-clamp-2">
+                {data.title}
+              </h2>
+            )}
+            {data.introduction && (
+              <p className="text-xs text-white/90 line-clamp-2">
+                {data.introduction}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 全屏模式：显示所有内容
   return (
-    <div className="antialiased w-full text-black px-4 pb-4 border border-black/10 rounded-2xl sm:rounded-3xl overflow-hidden bg-white">
+    <div className="antialiased w-full text-black px-4 pb-4 border border-black/10 rounded-2xl sm:rounded-3xl overflow-hidden bg-white relative">
+      {/* 退出全屏按钮 */}
+      <button
+        aria-label="Exit fullscreen"
+        className="absolute top-4 right-4 z-30 rounded-full bg-white text-black shadow-lg ring ring-black/5 p-2.5 pointer-events-auto"
+        onClick={() => {
+          if (window?.webplus?.requestDisplayMode) {
+            window.webplus.requestDisplayMode({ mode: "inline" });
+          }
+        }}
+      >
+        <X
+          strokeWidth={1.5}
+          className="h-4.5 w-4.5"
+          aria-hidden="true"
+        />
+      </button>
+
       <div className="max-w-full">
         {/* Header */}
         <div className="border-b border-black/5 py-4">
