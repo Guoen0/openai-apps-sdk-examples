@@ -39,6 +39,7 @@ type PostWidget = {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..");
 const ASSETS_DIR = path.resolve(ROOT_DIR, "assets");
+const MOCK_DATA_PATH = path.resolve(__dirname, "mock-data.json");
 
 function readWidgetHtml(componentName: string): string {
   if (!fs.existsSync(ASSETS_DIR)) {
@@ -218,6 +219,9 @@ function createPostServer(): Server {
 
       const args = toolInputParser.parse(request.params.arguments ?? {});
 
+      // 从 JSON 文件读取测试数据
+      const mockData = JSON.parse(fs.readFileSync(MOCK_DATA_PATH, "utf8"));
+
       return {
         content: [
           {
@@ -225,9 +229,7 @@ function createPostServer(): Server {
             text: widget.responseText,
           },
         ],
-        structuredContent: {
-          Topic: args.Topic,
-        },
+        structuredContent: mockData,
         _meta: widgetMeta(widget),
       };
     }
