@@ -308,6 +308,103 @@ async function handlePostMessage(
   }
 }
 
+// 单次请求处理：直接处理 MCP 请求，无需 SSE 会话。支持 Coze 调用。
+async function handleDirectMcpRequest(
+  req: IncomingMessage,
+  res: ServerResponse
+) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Content-Type", "application/json");
+
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", async () => {
+    try {
+      const request = JSON.parse(body);
+      let result;
+
+      // 处理 resources/list
+      if (request.method === "resources/list") {
+        result = { resources };
+      }
+      // 处理 resources/read
+      else if (request.method === "resources/read") {
+        const widget = widgetsByUri.get(request.params?.uri);
+        if (!widget) {
+          throw new Error(`Unknown resource: ${request.params?.uri}`);
+        }
+        result = {
+          contents: [
+            {
+              uri: widget.templateUri,
+              mimeType: "text/html+skybridge",
+              text: widget.html,
+              _meta: widgetMeta(widget),
+            },
+          ],
+        };
+      }
+      // 处理 tools/list
+      else if (request.method === "tools/list") {
+        result = { tools };
+      }
+      // 处理 tools/call
+      else if (request.method === "tools/call") {
+        const widget = widgetsById.get(request.params?.name);
+        if (!widget) {
+          throw new Error(`Unknown tool: ${request.params?.name}`);
+        }
+        const args = toolInputParser.parse(request.params?.arguments ?? {});
+        const mockData = JSON.parse(fs.readFileSync(MOCK_DATA_PATH, "utf8"));
+        result = {
+          content: [
+            {
+              type: "text",
+              text: widget.responseText,
+            },
+          ],
+          structuredContent: mockData,
+          _meta: widgetMeta(widget),
+        };
+      }
+      else {
+        res.writeHead(400).end(
+          JSON.stringify({
+            jsonrpc: "2.0",
+            id: request.id || 1,
+            error: { code: -32601, message: "Method not found" },
+          })
+        );
+        return;
+      }
+
+      res.writeHead(200).end(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: request.id || 1,
+          result: result,
+        })
+      );
+    } catch (error: any) {
+      console.error("Direct MCP request error:", error);
+      res.writeHead(500).end(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: null,
+          error: {
+            code: -32603,
+            message: error.message || "Internal error",
+          },
+        })
+      );
+    }
+  });
+}
+
 const portEnv = Number(process.env.PORT ?? 8000);
 const port = Number.isFinite(portEnv) ? portEnv : 8000;
 
@@ -322,7 +419,7 @@ const httpServer = createServer(
 
     if (
       req.method === "OPTIONS" &&
-      (url.pathname === ssePath || url.pathname === postPath)
+      (url.pathname === ssePath || url.pathname === postPath || url.pathname === "/mcp")
     ) {
       res.writeHead(204, {
         "Access-Control-Allow-Origin": "*",
@@ -340,6 +437,12 @@ const httpServer = createServer(
 
     if (req.method === "POST" && url.pathname === postPath) {
       await handlePostMessage(req, res, url);
+      return;
+    }
+
+    // 单次请求端点：直接处理 MCP 请求，无需 SSE 会话
+    if (req.method === "POST" && url.pathname === "/mcp") {
+      await handleDirectMcpRequest(req, res);
       return;
     }
 
