@@ -7,6 +7,22 @@ import crypto from "crypto";
 import pkg from "./package.json" with { type: "json" };
 import tailwindcss from "@tailwindcss/vite";
 
+// 读取 .env 文件（如果存在）
+const envPath = path.resolve(".env");
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, "utf8");
+  envContent.split("\n").forEach((line) => {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith("#") && trimmed.includes("=")) {
+      const [key, ...valueParts] = trimmed.split("=");
+      const value = valueParts.join("=").trim();
+      if (key && value) {
+        process.env[key] = value;
+      }
+    }
+  });
+}
+
 const entries = fg.sync("src/**/index.{tsx,jsx}");
 const outDir = "assets";
 
@@ -163,16 +179,17 @@ console.groupEnd();
 
 console.log("new hash: ", h);
 
-const defaultBaseUrl = "http://localhost:4444";
-const baseUrlCandidate = process.env.BASE_URL?.trim() ?? "";
-const baseUrlRaw = baseUrlCandidate.length > 0 ? baseUrlCandidate : defaultBaseUrl;
-const normalizedBaseUrl = baseUrlRaw.replace(/\/+$/, "") || defaultBaseUrl;
-console.log(`Using BASE_URL ${normalizedBaseUrl} for generated HTML`);
+// 构建时根据 BASE_URL 生成正确的 URL
+// 本地开发：不设置 BASE_URL，使用 localhost:4444
+// 生产环境：设置 BASE_URL 为部署地址
+const baseUrl = process.env.BASE_URL?.trim() || "http://localhost:4444";
+const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
 
 for (const name of builtNames) {
   const dir = outDir;
   const hashedHtmlPath = path.join(dir, `${name}-${h}.html`);
   const liveHtmlPath = path.join(dir, `${name}.html`);
+  
   const html = `<!doctype html>
 <html>
 <head>

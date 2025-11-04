@@ -152,6 +152,7 @@ const resourceTemplates: ResourceTemplate[] = widgets.map((widget) => ({
 }));
 
 function createPostServer(): Server {
+
   const server = new Server(
     {
       name: "post-node",
