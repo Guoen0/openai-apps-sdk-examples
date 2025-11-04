@@ -57,13 +57,22 @@ function App() {
         <div className="relative">
           {/* 封面图片 */}
           {firstPost?.images && firstPost.images.length > 0 && (
-            <div className="relative w-full aspect-[4/3] overflow-hidden">
+            <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
               <img
                 src={firstPost.images[0]}
                 alt={data.title || "Post"}
                 className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+                crossOrigin="anonymous"
+                onError={(e) => {
+                  e.target.style.display = "none";
+                  e.target.nextSibling && (e.target.nextSibling.style.display = "flex");
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 flex items-center justify-center text-white/60 text-sm" style={{ display: "none" }}>
+                图片加载失败
+              </div>
             </div>
           )}
           
@@ -128,6 +137,11 @@ function App() {
                       src={post.author.avatar}
                       alt={post.author.name}
                       className="w-10 h-10 rounded-full"
+                      referrerPolicy="no-referrer"
+                      crossOrigin="anonymous"
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                      }}
                     />
                   )}
                   <div className="flex-1">
@@ -149,12 +163,18 @@ function App() {
                 {post.images && post.images.length > 0 && (
                   <div className="grid grid-cols-3 gap-2 mb-3">
                     {post.images.slice(0, 3).map((img, idx) => (
-                      <img
-                        key={idx}
-                        src={img}
-                        alt={`${post.topic} ${idx + 1}`}
-                        className="w-full h-24 object-cover rounded-md"
-                      />
+                      <div key={idx} className="relative bg-gray-100 rounded-md overflow-hidden">
+                        <img
+                          src={img}
+                          alt={`${post.topic} ${idx + 1}`}
+                          className="w-full h-24 object-cover rounded-md"
+                          referrerPolicy="no-referrer"
+                          crossOrigin="anonymous"
+                          onError={(e) => {
+                            e.target.style.display = "none";
+                          }}
+                        />
+                      </div>
                     ))}
                   </div>
                 )}
