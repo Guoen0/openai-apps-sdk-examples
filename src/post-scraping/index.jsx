@@ -8,8 +8,8 @@ function App() {
   const toolOutput = useWidgetProps({});
   
   // 优先使用 toolOutput 中的数据，如果没有则使用 mockData
-  const responseData = toolOutput && toolOutput.data ? toolOutput : mockData;
-  const items = responseData?.data?.items || [];
+  const responseData = toolOutput && (toolOutput.items || toolOutput.data?.items) ? toolOutput : mockData;
+  const items = responseData?.items || responseData?.data?.items || [];
   
   // 限制显示20个帖子
   const displayItems = items.slice(0, 20);
