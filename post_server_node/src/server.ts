@@ -40,6 +40,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..");
 const ASSETS_DIR = path.resolve(ROOT_DIR, "assets");
 const MOCK_DATA_PATH = path.resolve(__dirname, "mock-data.json");
+const SCRAPING_MOCK_DATA_PATH = path.resolve(__dirname, "post-scraping-mock-data.json");
 
 function readWidgetHtml(componentName: string): string {
   if (!fs.existsSync(ASSETS_DIR)) {
@@ -95,6 +96,15 @@ const widgets: PostWidget[] = [
     html: readWidgetHtml("post"),
     responseText: "Rendered a post!",
   },
+  {
+    id: "post-scraping",
+    title: "Web Scraping",
+    templateUri: "ui://widget/post-scraping.html",
+    invoking: "Scraping webpage",
+    invoked: "Webpage scraped",
+    html: readWidgetHtml("post-scraping"),
+    responseText: "Scraped webpage content!",
+  },
 ];
 
 const widgetsById = new Map<string, PostWidget>();
@@ -105,26 +115,52 @@ widgets.forEach((widget) => {
   widgetsByUri.set(widget.templateUri, widget);
 });
 
-const toolInputSchema = {
-  type: "object",
-  properties: {
-    Topic: {
-      type: "string",
-      description: "Topic to search for.",
+// 为不同 widget 定义不同的输入 schema
+const toolInputSchemas: Record<string, any> = {
+  post: {
+    type: "object",
+    properties: {
+      Topic: {
+        type: "string",
+        description: "Topic to search for.",
+      },
     },
-  },
-  required: ["Topic"],
-  additionalProperties: false,
-} as const;
+    required: ["Topic"],
+    additionalProperties: false,
+  } as const,
+  "post-scraping": {
+    type: "object",
+    properties: {
+      Topic: {
+        type: "string",
+        description: "Topic to search for.",
+      },
+    },
+    required: ["Topic"],
+    additionalProperties: false,
+  } as const,
+};
 
-const toolInputParser = z.object({
-  Topic: z.string(),
-});
+// 为不同 widget 定义不同的 parser
+const toolInputParsers: Record<string, z.ZodObject<any>> = {
+  post: z.object({
+    Topic: z.string(),
+  }),
+  "post-scraping": z.object({
+    Topic: z.string(),
+  }),
+};
+
+// 为不同 widget 定义不同的 mock 数据路径
+const widgetMockDataPaths: Record<string, string> = {
+  post: MOCK_DATA_PATH,
+  "post-scraping": SCRAPING_MOCK_DATA_PATH,
+};
 
 const tools: Tool[] = widgets.map((widget) => ({
   name: widget.id,
   description: widget.title,
-  inputSchema: toolInputSchema,
+  inputSchema: toolInputSchemas[widget.id] || toolInputSchemas.post,
   title: widget.title,
   _meta: widgetMeta(widget),
   // To disable the approval prompt for the widgets
@@ -218,10 +254,13 @@ function createPostServer(): Server {
         throw new Error(`Unknown tool: ${request.params.name}`);
       }
 
-      const args = toolInputParser.parse(request.params.arguments ?? {});
+      // 根据 widget id 使用对应的 parser
+      const parser = toolInputParsers[widget.id] || toolInputParsers.post;
+      const args = parser.parse(request.params.arguments ?? {});
 
-      // 从 JSON 文件读取测试数据
-      const mockData = JSON.parse(fs.readFileSync(MOCK_DATA_PATH, "utf8"));
+      // 根据 widget id 读取对应的 mock 数据
+      const mockDataPath = widgetMockDataPaths[widget.id] || MOCK_DATA_PATH;
+      const mockData = JSON.parse(fs.readFileSync(mockDataPath, "utf8"));
 
       return {
         content: [
@@ -358,8 +397,12 @@ async function handleDirectMcpRequest(
         if (!widget) {
           throw new Error(`Unknown tool: ${request.params?.name}`);
         }
-        const args = toolInputParser.parse(request.params?.arguments ?? {});
-        const mockData = JSON.parse(fs.readFileSync(MOCK_DATA_PATH, "utf8"));
+        // 根据 widget id 使用对应的 parser
+        const parser = toolInputParsers[widget.id] || toolInputParsers.post;
+        const args = parser.parse(request.params?.arguments ?? {});
+        // 根据 widget id 读取对应的 mock 数据
+        const mockDataPath = widgetMockDataPaths[widget.id] || MOCK_DATA_PATH;
+        const mockData = JSON.parse(fs.readFileSync(mockDataPath, "utf8"));
         result = {
           content: [
             {

@@ -38,6 +38,7 @@ const targets: string[] = [
   // "pizzaz-list",
   // "pizzaz-albums",
   "post",
+  "post-scraping",
 ];
 const builtNames: string[] = [];
 
@@ -184,6 +185,7 @@ console.log("new hash: ", h);
 // 生产环境：设置 BASE_URL 为部署地址
 const baseUrl = process.env.BASE_URL?.trim() || "http://localhost:4444";
 const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
+
 
 for (const name of builtNames) {
   const dir = outDir;

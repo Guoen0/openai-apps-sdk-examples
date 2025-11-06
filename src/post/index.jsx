@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { useWidgetProps } from "../use-widget-props";
 import { useOpenAiGlobal } from "../use-openai-global";
 import { Maximize2, X } from "lucide-react";
 import mockData from "./mock-data.json";
+import ImageViewer from "./ImageViewer";
 
 function App() {
   // toolOutput 返回的是整个 mockData 对象（包含 title, introduction, posts, conclusion）
   // 从 server.ts 中看到：structuredContent: mockData
   const toolOutput = useWidgetProps({});
   const displayMode = useOpenAiGlobal("displayMode");
-  const isFullscreen = displayMode === "fullscreen";
-  //const isFullscreen = true;
+  //const isFullscreen = displayMode === "fullscreen";
+  const isFullscreen = true;
+  
+  // 图片查看器状态
+  const [viewingImage, setViewingImage] = useState(null);
   
   // 优先使用 toolOutput 中的数据，如果没有则使用 mockData
   const data = (toolOutput && toolOutput.posts && Array.isArray(toolOutput.posts))
@@ -128,7 +132,9 @@ function App() {
         <div className="mt-3 mb-4">
           <div className="bg-[#EEEEEE] border border-black/5 rounded-2xl overflow-hidden relative">
             {(firstPost?.cover || (firstPost?.image_list && firstPost.image_list.length > 0)) && (
-              <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
+              <div 
+                className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100"
+              >
                 <img
                   src={firstPost.cover || firstPost.image_list[0]}
                   alt={data.title || "Post"}
@@ -213,7 +219,11 @@ function App() {
                     return (
                       <div className={`grid ${gridCols} gap-2 ${imageCount === 1 ? 'justify-items-center' : ''}`}>
                         {post.image_list.slice(0, 6).map((img, idx) => (
-                          <div key={idx} className={`relative bg-gray-100 ${imageCount === 1 ? 'rounded-3xl' : 'rounded-xl'} overflow-hidden ${imageCount === 1 ? 'w-[60%]' : 'w-full'}`}>
+                          <div 
+                            key={idx} 
+                            className={`relative bg-gray-100 ${imageCount === 1 ? 'rounded-3xl' : 'rounded-xl'} overflow-hidden ${imageCount === 1 ? 'w-[60%]' : 'w-full'} cursor-pointer`}
+                            onClick={() => isFullscreen && setViewingImage(img)}
+                          >
                             <img
                               src={img}
                               alt={`${post.display_title} ${idx + 1}`}
@@ -305,6 +315,12 @@ function App() {
           </div>
         )}
       </div>
+      
+      {/* 图片查看器 */}
+      <ImageViewer 
+        image={viewingImage} 
+        onClose={() => setViewingImage(null)} 
+      />
     </div>
   );
 }
