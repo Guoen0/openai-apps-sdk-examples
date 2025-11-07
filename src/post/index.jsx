@@ -11,8 +11,8 @@ function App() {
   // 从 server.ts 中看到：structuredContent: mockData
   const toolOutput = useWidgetProps({});
   const displayMode = useOpenAiGlobal("displayMode");
-  //const isFullscreen = displayMode === "fullscreen";
-  const isFullscreen = true;
+  const isFullscreen = displayMode === "fullscreen";
+  //const isFullscreen = true;
   
   // 图片查看器状态
   const [viewingImage, setViewingImage] = useState(null);
