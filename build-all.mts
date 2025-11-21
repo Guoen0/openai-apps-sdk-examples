@@ -39,6 +39,7 @@ const targets: string[] = [
   // "pizzaz-albums",
   "post",
   "post-scraping",
+  "markdown-render",
 ];
 const builtNames: string[] = [];
 

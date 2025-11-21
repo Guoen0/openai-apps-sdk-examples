@@ -39,8 +39,9 @@ type PostWidget = {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..");
 const ASSETS_DIR = path.resolve(ROOT_DIR, "assets");
-const MOCK_DATA_PATH = path.resolve(__dirname, "mock-data.json");
-const SCRAPING_MOCK_DATA_PATH = path.resolve(__dirname, "post-scraping-mock-data.json");
+const MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "post", "mock-data.json");
+const SCRAPING_MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "post-scraping", "mock-data.json");
+const MARKDOWN_RENDER_MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "markdown-render", "mock-data.json");
 
 function readWidgetHtml(componentName: string): string {
   if (!fs.existsSync(ASSETS_DIR)) {
@@ -105,6 +106,15 @@ const widgets: PostWidget[] = [
     html: readWidgetHtml("post-scraping"),
     responseText: "Scraped webpage content!",
   },
+  {
+    id: "markdown-render",
+    title: "Markdown Render",
+    templateUri: "ui://widget/markdown-render.html",
+    invoking: "Rendering markdown",
+    invoked: "Markdown rendered",
+    html: readWidgetHtml("markdown-render"),
+    responseText: "Rendered markdown content!",
+  },
 ];
 
 const widgetsById = new Map<string, PostWidget>();
@@ -139,6 +149,17 @@ const toolInputSchemas: Record<string, any> = {
     required: ["Topic"],
     additionalProperties: false,
   } as const,
+  "markdown-render": {
+    type: "object",
+    properties: {
+      markdown: {
+        type: "string",
+        description: "Markdown content to render.",
+      },
+    },
+    required: ["markdown"],
+    additionalProperties: false,
+  } as const,
 };
 
 // 为不同 widget 定义不同的 parser
@@ -149,13 +170,23 @@ const toolInputParsers: Record<string, z.ZodObject<any>> = {
   "post-scraping": z.object({
     Topic: z.string(),
   }),
+  "markdown-render": z.object({
+    markdown: z.string(),
+  }),
 };
 
 // 为不同 widget 定义不同的 mock 数据路径
 const widgetMockDataPaths: Record<string, string> = {
   post: MOCK_DATA_PATH,
   "post-scraping": SCRAPING_MOCK_DATA_PATH,
+  "markdown-render": MARKDOWN_RENDER_MOCK_DATA_PATH,
 };
+
+// 统一的函数：读取 mock 数据
+function getMockData(widgetId: string): any {
+  const mockDataPath = widgetMockDataPaths[widgetId] || MOCK_DATA_PATH;
+  return JSON.parse(fs.readFileSync(mockDataPath, "utf8"));
+}
 
 const tools: Tool[] = widgets.map((widget) => ({
   name: widget.id,
@@ -258,9 +289,13 @@ function createPostServer(): Server {
       const parser = toolInputParsers[widget.id] || toolInputParsers.post;
       const args = parser.parse(request.params.arguments ?? {});
 
-      // 根据 widget id 读取对应的 mock 数据
-      const mockDataPath = widgetMockDataPaths[widget.id] || MOCK_DATA_PATH;
-      const mockData = JSON.parse(fs.readFileSync(mockDataPath, "utf8"));
+      // 使用统一的函数读取 mock 数据
+      const mockData = getMockData(widget.id);
+
+      // 统一处理：如果传入了参数，合并到 mockData 中；否则直接返回 mockData
+      const structuredContent = args && Object.keys(args).length > 0
+        ? { ...mockData, ...args }
+        : mockData;
 
       return {
         content: [
@@ -269,7 +304,7 @@ function createPostServer(): Server {
             text: widget.responseText,
           },
         ],
-        structuredContent: mockData,
+        structuredContent,
         _meta: widgetMeta(widget),
       };
     }
@@ -400,9 +435,15 @@ async function handleDirectMcpRequest(
         // 根据 widget id 使用对应的 parser
         const parser = toolInputParsers[widget.id] || toolInputParsers.post;
         const args = parser.parse(request.params?.arguments ?? {});
-        // 根据 widget id 读取对应的 mock 数据
-        const mockDataPath = widgetMockDataPaths[widget.id] || MOCK_DATA_PATH;
-        const mockData = JSON.parse(fs.readFileSync(mockDataPath, "utf8"));
+        
+        // 使用统一的函数读取 mock 数据
+        const mockData = getMockData(widget.id);
+
+        // 统一处理：如果传入了参数，合并到 mockData 中；否则直接返回 mockData
+        const structuredContent = args && Object.keys(args).length > 0
+          ? { ...mockData, ...args }
+          : mockData;
+
         result = {
           content: [
             {
@@ -410,7 +451,7 @@ async function handleDirectMcpRequest(
               text: widget.responseText,
             },
           ],
-          structuredContent: mockData,
+          structuredContent,
           _meta: widgetMeta(widget),
         };
       }
