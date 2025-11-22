@@ -1,9 +1,9 @@
 {
-  "name": "post-mcp-node",
+  "name": "hotspot-mcp-node",
   "version": "0.1.0",
   "type": "module",
   "private": true,
-  "description": "Example MCP server for Post demo tools using the official TypeScript SDK.",
+  "description": "Example MCP server for Hotspot demo tools using the official TypeScript SDK.",
   "scripts": {
     "start": "tsx src/server.ts"
   },

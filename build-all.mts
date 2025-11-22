@@ -35,11 +35,12 @@ const targets: string[] = [
   // "solar-system",
   // "pizzaz",
   // "pizzaz-carousel",
-  // "pizzaz-list",
+  //   "pizzaz-list",
   // "pizzaz-albums",
-  "post",
-  "post-scraping",
+  "hotspot",
+  "hotspot-scraping",
   "markdown-render",
+  "post-draft",
 ];
 const builtNames: string[] = [];
 

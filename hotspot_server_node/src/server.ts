@@ -26,7 +26,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 
-type PostWidget = {
+type HotspotWidget = {
   id: string;
   title: string;
   templateUri: string;
@@ -39,9 +39,10 @@ type PostWidget = {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..", "..");
 const ASSETS_DIR = path.resolve(ROOT_DIR, "assets");
-const MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "post", "mock-data.json");
-const SCRAPING_MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "post-scraping", "mock-data.json");
+const MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "hotspot", "mock-data.json");
+const SCRAPING_MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "hotspot-scraping", "mock-data.json");
 const MARKDOWN_RENDER_MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "markdown-render", "mock-data.json");
+const POST_DRAFT_MOCK_DATA_PATH = path.resolve(ROOT_DIR, "src", "post-draft", "mock-data.json");
 
 function readWidgetHtml(componentName: string): string {
   if (!fs.existsSync(ASSETS_DIR)) {
@@ -77,7 +78,7 @@ function readWidgetHtml(componentName: string): string {
   return htmlContents;
 }
 
-function widgetMeta(widget: PostWidget) {
+function widgetMeta(widget: HotspotWidget) {
   return {
     "openai/outputTemplate": widget.templateUri,
     "openai/toolInvocation/invoking": widget.invoking,
@@ -87,23 +88,23 @@ function widgetMeta(widget: PostWidget) {
   } as const;
 }
 
-const widgets: PostWidget[] = [
+const widgets: HotspotWidget[] = [
   {
-    id: "post",
-    title: "Show Post",
-    templateUri: "ui://widget/post.html",
-    invoking: "Creating a post",
-    invoked: "Post created",
-    html: readWidgetHtml("post"),
-    responseText: "Rendered a post!",
+    id: "hotspot",
+    title: "Show Hotspot",
+    templateUri: "ui://widget/hotspot.html",
+    invoking: "Creating a hotspot",
+    invoked: "Hotspot created",
+    html: readWidgetHtml("hotspot"),
+    responseText: "Rendered a hotspot!",
   },
   {
-    id: "post-scraping",
+    id: "hotspot-scraping",
     title: "Web Scraping",
-    templateUri: "ui://widget/post-scraping.html",
+    templateUri: "ui://widget/hotspot-scraping.html",
     invoking: "Scraping webpage",
     invoked: "Webpage scraped",
-    html: readWidgetHtml("post-scraping"),
+    html: readWidgetHtml("hotspot-scraping"),
     responseText: "Scraped webpage content!",
   },
   {
@@ -115,10 +116,19 @@ const widgets: PostWidget[] = [
     html: readWidgetHtml("markdown-render"),
     responseText: "Rendered markdown content!",
   },
+  {
+    id: "post-draft",
+    title: "Post Draft",
+    templateUri: "ui://widget/post-draft.html",
+    invoking: "Creating a post draft",
+    invoked: "Post draft created",
+    html: readWidgetHtml("post-draft"),
+    responseText: "Rendered post draft!",
+  },
 ];
 
-const widgetsById = new Map<string, PostWidget>();
-const widgetsByUri = new Map<string, PostWidget>();
+const widgetsById = new Map<string, HotspotWidget>();
+const widgetsByUri = new Map<string, HotspotWidget>();
 
 widgets.forEach((widget) => {
   widgetsById.set(widget.id, widget);
@@ -127,7 +137,7 @@ widgets.forEach((widget) => {
 
 // 为不同 widget 定义不同的输入 schema
 const toolInputSchemas: Record<string, any> = {
-  post: {
+  hotspot: {
     type: "object",
     properties: {
       Topic: {
@@ -138,7 +148,7 @@ const toolInputSchemas: Record<string, any> = {
     required: ["Topic"],
     additionalProperties: false,
   } as const,
-  "post-scraping": {
+  "hotspot-scraping": {
     type: "object",
     properties: {
       Topic: {
@@ -160,26 +170,54 @@ const toolInputSchemas: Record<string, any> = {
     required: ["markdown"],
     additionalProperties: false,
   } as const,
+  "post-draft": {
+    type: "object",
+    properties: {
+      title: {
+        type: "string",
+        description: "Title of the post draft.",
+      },
+      content: {
+        type: "string",
+        description: "Content/body text of the post draft.",
+      },
+      image_list: {
+        type: "array",
+        items: {
+          type: "string",
+        },
+        description: "List of image URLs for the post draft.",
+      },
+    },
+    required: [],
+    additionalProperties: false,
+  } as const,
 };
 
 // 为不同 widget 定义不同的 parser
 const toolInputParsers: Record<string, z.ZodObject<any>> = {
-  post: z.object({
+  hotspot: z.object({
     Topic: z.string(),
   }),
-  "post-scraping": z.object({
+  "hotspot-scraping": z.object({
     Topic: z.string(),
   }),
   "markdown-render": z.object({
     markdown: z.string(),
   }),
+  "post-draft": z.object({
+    title: z.string().optional(),
+    content: z.string().optional(),
+    image_list: z.array(z.string()).optional(),
+  }),
 };
 
 // 为不同 widget 定义不同的 mock 数据路径
 const widgetMockDataPaths: Record<string, string> = {
-  post: MOCK_DATA_PATH,
-  "post-scraping": SCRAPING_MOCK_DATA_PATH,
+  hotspot: MOCK_DATA_PATH,
+  "hotspot-scraping": SCRAPING_MOCK_DATA_PATH,
   "markdown-render": MARKDOWN_RENDER_MOCK_DATA_PATH,
+  "post-draft": POST_DRAFT_MOCK_DATA_PATH,
 };
 
 // 统一的函数：读取 mock 数据
@@ -191,7 +229,7 @@ function getMockData(widgetId: string): any {
 const tools: Tool[] = widgets.map((widget) => ({
   name: widget.id,
   description: widget.title,
-  inputSchema: toolInputSchemas[widget.id] || toolInputSchemas.post,
+  inputSchema: toolInputSchemas[widget.id] || toolInputSchemas.hotspot,
   title: widget.title,
   _meta: widgetMeta(widget),
   // To disable the approval prompt for the widgets
@@ -218,11 +256,11 @@ const resourceTemplates: ResourceTemplate[] = widgets.map((widget) => ({
   _meta: widgetMeta(widget),
 }));
 
-function createPostServer(): Server {
+function createHotspotServer(): Server {
 
   const server = new Server(
     {
-      name: "post-node",
+      name: "hotspot-node",
       version: "0.1.0",
     },
     {
@@ -286,7 +324,7 @@ function createPostServer(): Server {
       }
 
       // 根据 widget id 使用对应的 parser
-      const parser = toolInputParsers[widget.id] || toolInputParsers.post;
+      const parser = toolInputParsers[widget.id] || toolInputParsers.hotspot;
       const args = parser.parse(request.params.arguments ?? {});
 
       // 使用统一的函数读取 mock 数据
@@ -325,7 +363,7 @@ const postPath = "/mcp/messages";
 
 async function handleSseRequest(res: ServerResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  const server = createPostServer();
+  const server = createHotspotServer();
   const transport = new SSEServerTransport(postPath, res);
   const sessionId = transport.sessionId;
 
@@ -433,7 +471,7 @@ async function handleDirectMcpRequest(
           throw new Error(`Unknown tool: ${request.params?.name}`);
         }
         // 根据 widget id 使用对应的 parser
-        const parser = toolInputParsers[widget.id] || toolInputParsers.post;
+        const parser = toolInputParsers[widget.id] || toolInputParsers.hotspot;
         const args = parser.parse(request.params?.arguments ?? {});
         
         // 使用统一的函数读取 mock 数据
@@ -540,7 +578,7 @@ httpServer.on("clientError", (err: Error, socket) => {
 });
 
 httpServer.listen(port, () => {
-  console.log(`Post MCP server listening on http://localhost:${port}`);
+  console.log(`Hotspot MCP server listening on http://localhost:${port}`);
   console.log(`  SSE stream: GET http://localhost:${port}${ssePath}`);
   console.log(
     `  Message post endpoint: POST http://localhost:${port}${postPath}?sessionId=...`

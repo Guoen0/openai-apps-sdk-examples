@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className={`antialiased w-full text-black border border-black/10 rounded-2xl sm:rounded-3xl overflow-hidden bg-white ${
-      isFullscreen ? 'min-h-screen' : 'h-[600px]'
+      isFullscreen ? 'min-h-screen' : 'h-[00px]'
     } flex flex-col relative`}>
       {/* 顶部渐变遮罩 */}
       <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-b from-white/80 to-transparent pointer-events-none z-10" />

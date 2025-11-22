@@ -109,5 +109,5 @@ function App() {
   );
 }
 
-const root = createRoot(document.getElementById("post-scraping-root"));
+const root = createRoot(document.getElementById("hotspot-scraping-root"));
 root.render(<App />);

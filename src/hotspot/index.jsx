@@ -325,7 +325,7 @@ function App() {
   );
 }
 
-createRoot(document.getElementById("post-root")).render(<App />);
+createRoot(document.getElementById("hotspot-root")).render(<App />);
 
 export { App };
 export default App;

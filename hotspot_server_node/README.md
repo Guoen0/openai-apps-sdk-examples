@@ -1,6 +1,6 @@
-# Post MCP server (Node)
+# Hotspot MCP server (Node)
 
-This directory contains a minimal Model Context Protocol (MCP) server implemented with the official TypeScript SDK. The server can be extended to expose Post demo tools.
+This directory contains a minimal Model Context Protocol (MCP) server implemented with the official TypeScript SDK. The server can be extended to expose Hotspot demo tools.
 
 ## Prerequisites
 
