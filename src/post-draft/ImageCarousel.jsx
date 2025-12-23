@@ -37,14 +37,14 @@ function ImageCarousel({ images, title, onImageClick }) {
           {images.map((img, idx) => (
             <div
               key={idx}
-              className="flex-shrink-0 w-[180px] sm:w-[200px] cursor-pointer group"
+              className="flex-shrink-0 h-[180px] sm:h-[200px] cursor-pointer group"
               onClick={() => onImageClick(img)}
             >
-              <div className="w-full overflow-hidden rounded-lg bg-gray-100 shadow-md group-hover:shadow-lg transition-shadow">
+              <div className="h-full overflow-hidden rounded-lg bg-gray-100 shadow-md group-hover:shadow-lg transition-shadow flex items-center justify-center">
                 <img
                   src={img}
                   alt={`${title} ${idx + 1}`}
-                  className="w-full h-auto object-contain"
+                  className="h-full w-auto object-contain"
                   referrerPolicy="no-referrer"
                   crossOrigin="anonymous"
                   onError={(e) => {
