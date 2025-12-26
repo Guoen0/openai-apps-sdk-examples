@@ -8,8 +8,29 @@ function App() {
   const toolOutput = useWidgetProps({});
   
   // 优先使用 toolOutput 中的数据，如果没有则使用 mockData
-  const responseData = toolOutput && (toolOutput.items || toolOutput.data?.items) ? toolOutput : mockData;
-  const items = responseData?.items || responseData?.data?.items || [];
+  const responseData = toolOutput && (toolOutput.data || toolOutput.items || toolOutput.data?.items) ? toolOutput : mockData;
+  
+  // 新的数据结构：data 数组，每个元素包含 searchContent 数组
+  // 需要将所有 searchContent 展平并提取视频内容
+  const dataArray = responseData?.data || [];
+  const items = dataArray.flatMap(entity => 
+    (entity.searchContent || [])
+      .filter(content => content) // 过滤掉 null 或 undefined
+      .map(content => ({
+        note_id: content.contentId,
+        cover: content.coverUrl,
+        display_title: content.title || content.description,
+        avatar: content.avatarUrl,
+        nickname: content.authorName,
+        liked_count: content.likeCount,
+        comment_count: content.commentCount,
+        share_count: content.shareCount,
+        // 保留原始数据以便后续使用
+        originalContent: content,
+        entityTitle: entity.title,
+        entityId: entity.entityId
+      }))
+  );
   
   // 限制显示20个帖子
   const displayItems = items.slice(0, 20);

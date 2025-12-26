@@ -7,8 +7,9 @@ import mockData from "./mock-data.json";
 import ImageViewer from "./ImageViewer";
 
 function App() {
-  // toolOutput 返回的是整个 mockData 对象（包含 title, introduction, posts, conclusion）
-  // 从 server.ts 中看到：structuredContent: mockData
+  // toolOutput 返回的是 structuredContent 对象
+  // 新的数据结构：structuredContent { title, introduction, conclusion, posts[] }
+  // posts[].searchContent[] 包含视频内容
   const toolOutput = useWidgetProps({});
   const displayMode = useOpenAiGlobal("displayMode");
   const isFullscreen = displayMode === "fullscreen";
@@ -17,13 +18,70 @@ function App() {
   // 图片查看器状态
   const [viewingImage, setViewingImage] = useState(null);
   
+  // 统一转换所有图片 URL：heif -> webp
+  const convertImageUrl = (url) => {
+    if (!url) return url;
+    return url.replace(/format\/heif/gi, 'format/webp');
+  };
+  
   // 优先使用 toolOutput 中的数据，如果没有则使用 mockData
-  const data = (toolOutput && toolOutput.posts && Array.isArray(toolOutput.posts))
-    ? toolOutput
-    : mockData;
+  const rawData = (toolOutput && toolOutput.structuredContent) 
+    ? toolOutput.structuredContent 
+    : (toolOutput && toolOutput.title) 
+    ? toolOutput 
+    : (mockData.structuredContent || mockData);
+  
+  // 提取 structuredContent 中的基本信息
+  const data = {
+    title: rawData.title,
+    introduction: rawData.introduction,
+    conclusion: rawData.conclusion,
+    posts: []
+  };
+
+  // 转换 posts 数据：从新的结构转换为组件期望的结构
+  const rawPosts = rawData.posts || [];
+  data.posts = rawPosts.map((post) => {
+    // 获取 searchContent 中的第一个视频内容作为主要内容
+    const firstContent = post.searchContent && post.searchContent.length > 0 
+      ? post.searchContent[0] 
+      : null;
+    
+    if (!firstContent) {
+      return null;
+    }
+    
+    // 判断是视频还是图片
+    const isVideo = firstContent.playUrl && firstContent.playUrl.length > 0;
+    const videoUrl = isVideo ? firstContent.playUrl[0] : null;
+    const imageList = firstContent.multiImageUrlList 
+      ? firstContent.multiImageUrlList.map(convertImageUrl)
+      : (firstContent.coverUrl ? [convertImageUrl(firstContent.coverUrl)] : []);
+    
+    // 映射字段
+    return {
+      note_id: firstContent.contentId,
+      display_title: post.title || firstContent.title || firstContent.description,
+      avatar: convertImageUrl(firstContent.avatarUrl),
+      nickname: firstContent.authorName,
+      cover: convertImageUrl(firstContent.coverUrl),
+      isVideo: isVideo,
+      videoUrl: videoUrl,
+      image_list: imageList,
+      liked_count: firstContent.likeCount || 0,
+      collected_count: firstContent.collectedCount || 0,
+      comments_count: firstContent.commentCount || 0,
+      shared_count: firstContent.shareCount || 0,
+      desc: firstContent.description || firstContent.title,
+      note_analysis: post.note_analysis, // 保持原有的分析数据
+      // 保留原始数据以便后续使用
+      originalPost: post,
+      originalContent: firstContent
+    };
+  }).filter(post => post !== null); // 过滤掉没有内容的帖子
 
   // 确保 data.posts 存在
-  if (!data || !data.posts || !Array.isArray(data.posts)) {
+  if (!data.posts || !Array.isArray(data.posts) || data.posts.length === 0) {
     return (
       <div className="antialiased w-full text-black px-4 pb-4 border border-black/10 rounded-2xl sm:rounded-3xl overflow-hidden bg-white">
         <div className="max-w-full">
@@ -34,15 +92,6 @@ function App() {
       </div>
     );
   }
-
-  // 统一转换所有图片 URL：heif -> webp
-  data.posts.forEach(post => {
-    if (post.avatar) post.avatar = post.avatar.replace(/format\/heif/gi, 'format/webp');
-    if (post.cover) post.cover = post.cover.replace(/format\/heif/gi, 'format/webp');
-    if (post.image_list) {
-      post.image_list = post.image_list.map(url => url.replace(/format\/heif/gi, 'format/webp'));
-    }
-  });
 
   const firstPost = data.posts[0];
 
@@ -212,32 +261,57 @@ function App() {
                     <span>📤 {post.shared_count || 0}</span>
                   </div>
                   
-                  {/* 图片网格 */}
-                  {post.image_list && post.image_list.length > 0 && (() => {
-                    const imageCount = Math.min(post.image_list.length, 6);
-                    const gridCols = imageCount === 1 ? 'grid-cols-1' : imageCount === 2 ? 'grid-cols-2' : 'grid-cols-3';
-                    return (
-                      <div className={`grid ${gridCols} gap-2 ${imageCount === 1 ? 'justify-items-center' : ''}`}>
-                        {post.image_list.slice(0, 6).map((img, idx) => (
-                          <div 
-                            key={idx} 
-                            className={`relative bg-gray-100 ${imageCount === 1 ? 'rounded-3xl' : 'rounded-xl'} overflow-hidden ${imageCount === 1 ? 'w-[60%]' : 'w-full'} cursor-pointer`}
-                            onClick={() => isFullscreen && setViewingImage(img)}
-                          >
-                            <img
-                              src={img}
-                              alt={`${post.display_title} ${idx + 1}`}
+                  {/* 视频/图片网格 */}
+                  {(() => {
+                    // 如果是视频，显示视频播放器
+                    if (post.isVideo && post.videoUrl) {
+                      return (
+                        <div className="flex justify-center">
+                          <div className="relative bg-gray-100 rounded-3xl overflow-hidden w-[60%]" style={{ pointerEvents: 'auto' }}>
+                            <video
+                              src={post.videoUrl}
                               className="w-full h-auto object-cover"
+                              controls
+                              playsInline
+                              poster={post.cover}
                               referrerPolicy="no-referrer"
                               crossOrigin="anonymous"
-                              onError={(e) => {
-                                e.target.style.display = "none";
-                              }}
+                              style={{ pointerEvents: 'auto', width: '100%', display: 'block' }}
                             />
                           </div>
-                        ))}
-                      </div>
-                    );
+                        </div>
+                      );
+                    }
+                    
+                    // 如果是图片，显示图片网格
+                    if (post.image_list && post.image_list.length > 0) {
+                      const imageCount = Math.min(post.image_list.length, 6);
+                      const gridCols = imageCount === 1 ? 'grid-cols-1' : imageCount === 2 ? 'grid-cols-2' : 'grid-cols-3';
+                      return (
+                        <div className={`grid ${gridCols} gap-2 ${imageCount === 1 ? 'justify-items-center' : ''}`}>
+                          {post.image_list.slice(0, 6).map((img, idx) => (
+                            <div 
+                              key={idx} 
+                              className={`relative bg-gray-100 ${imageCount === 1 ? 'rounded-3xl' : 'rounded-xl'} overflow-hidden ${imageCount === 1 ? 'w-[60%]' : 'w-full'} cursor-pointer`}
+                              onClick={() => isFullscreen && setViewingImage(img)}
+                            >
+                              <img
+                                src={img}
+                                alt={`${post.display_title} ${idx + 1}`}
+                                className="w-full h-auto object-cover"
+                                referrerPolicy="no-referrer"
+                                crossOrigin="anonymous"
+                                onError={(e) => {
+                                  e.target.style.display = "none";
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    }
+                    
+                    return null;
                   })()}
                   
                   {/* 正文和分析卡片 */}

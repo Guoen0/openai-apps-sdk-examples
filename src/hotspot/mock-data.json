@@ -1,108 +1,126 @@
 {
-  "conclusion": {
-    "negative": "需避开的雷区：不要盲目跟风无独特风格，避免内容同质化；不要只讲设计细节而忽略背后的情感故事；不要忽视目标人群的真实需求（如孩子的童年体验），否则难以引发用户的长期关注与高互动。",
-    "positive": "可借鉴热门内容的核心技巧：用‘个人经验分享’拉近距离，通过‘改造前后对比’或‘悬念提问’提升话题性，融入情感化理念（如‘童年只有一次’），精准满足用户对家居‘审美质感+情感共鸣’的需求。"
-  },
-  "introduction": "您好！这份报告结合小红书热门笔记，为您梳理家居领域的风格与需求热点，助您把握趋势~",
-  "posts": [
-    {
-      "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo31bi9pqmigu0g48vhk3hrpoavg36ord8?imageView2/2/w/80/format/jpg",
-      "collected_count": 718,
-      "comments_count": 44,
-      "cover": "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mf048vhk3hrpoavhnq3tl0?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=dddb0186d7ac1d2da9454c2d2b005d0a&t=690afbfa",
-      "desc": "熟悉我的盆友大概都清楚，我家买回来最多的，几乎是“若奈”他们家的单品；物品本身的中古和现代的艺术感，就自带新颖和耐看，把",
-      "display_title": "聊聊我家的审美底色",
-      "image_list": [
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mf048vhk3hrpoavhnq3tl0?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=dddb0186d7ac1d2da9454c2d2b005d0a&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6me048vhk3hrpoav28keem0?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=4c88704ebdde6be468afef2120a8cf32&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6meg48vhk3hrpoavuih1228?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=d6e34d1cfabd99863c1f7183278c669f&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mgg48vhk3hrpoavngl9le0?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=c248ae1a581ddf1524d48fe3288d5f76&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mfg48vhk3hrpoavf66adoo?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=afc15eec5eb8ad3624e9ef0a6416f245&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mhg48vhk3hrpoav9c58p9o?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=7d053d87160e9b30f40661be0f461301&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mh048vhk3hrpoav645vni0?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=fa7a66f2db922012e8f81f1e0d1d0931&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mg048vhk3hrpoavai34ma8?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=ce786b9adb745210f7b4af35abf67917&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mk048vhk3hrpoavnvk7re8?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=a37e67320910659131df673faef1a1fa&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mi048vhk3hrpoav90s8an8?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=07375248a9ad7614e8b6b3e76adebbbc&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mj048vhk3hrpoav600btfo?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=d80e4cb7413a0be66fc120293aafebe8&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mkg48vhk3hrpoav0id5ea8?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=fc3b73211947a740fa67f7c35b41df62&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mig48vhk3hrpoavla8tnmg?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=713c4e2b88ff5383d06b1de9a7dbb817&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31o9v0b3n6mjg48vhk3hrpoav3dj576o?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=05e57f59bff675039900e49e3db4522d&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g00831o9v5toulm0048vhk3hrpoav0nq9gb0?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=c45d31281c53a07f0d9b2dc8246e2ee5&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g00831o9v5toulm0g48vhk3hrpoavtnelpa8?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=0afdfb6421f158eab2e0c0fa67bfe25f&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g00831o9v5toulm1048vhk3hrpoavjgt2gig?imageView2/2/w/1080/format/heif/q/45&redImage/frame/0&ap=5&sc=SRH_DTL&sign=c087866ed85fe86e0eaaf0bfec4ef8ac&t=690afbfa"
-      ],
-      "last_update_time": 0,
-      "liked_count": 903,
-      "nice_count": 0,
-      "nickname": "浩比。",
-      "note_analysis": {
-        "aesthetics": "拍摄对象美学风格是“中古现代融合家居美学”，拍摄风格“简约自然风”，色彩柔和，突出物品质感与空间氛围，增强审美代入感。",
-        "operations": "细分赛道为家居美学/软装搭配，特点是聚焦特定风格（中古与现代艺术感融合），吸引对家居审美提升有需求的用户。话术模板为“个人经验分享式”，以“熟悉我的盆友”拉近距离，结合产品“艺术感”“新颖耐看”突出差异化，引发共鸣。",
-        "summarize": "提供实用家居审美搭配思路，满足用户提升家居美感需求，高收藏、点赞数据反映内容实用性与吸引力。"
-      },
-      "note_id": "690461d3000000000402b46f",
-      "shared_count": 96,
-      "timestamp": 1761974276000,
-      "type": "normal",
-      "update_time": 1761974276000,
-      "userid": "5857a3bc82ec3912f3bfe15f",
-      "video_download_url": ""
+  "structuredContent": {
+    "introduction": "想在抖音热门手势舞赛道脱颖而出？从明星热点、粉丝互动和视觉呈现入手，让你的内容更吸睛！",
+    "conclusion": {
+      "negative": "避免忽视粉丝真实需求，盲目跟风热门标签而忽略内容原创性与情感共鸣，否则易降低粉丝参与度与内容吸引力。",
+      "positive": "拍摄时可采用观众视角或近景特写突出手势细节，结合明星热点与粉丝互动话术，增强内容感染力与传播性。"
     },
-    {
-      "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo31licab0h58004a1g6loi09p8f45dv2o?imageView2/2/w/80/format/jpg",
-      "collected_count": 62,
-      "comments_count": 44,
-      "cover": "https://sns-na-i6.xhscdn.com/1040g2sg31ob256iqlme04a1g6loi09p83nk3of0?imageView2/2/w/1080/format/webp&ap=5&sc=SRH_DTL&sign=955a11deca42699807cd602a3a4e4afa&t=690afbfa",
-      "desc": "求助！看了百遍，还是不明白它怎么点赞上百万\n这个是 ins 上的一个博主翻新旧房的视频\n博士粉丝不到 2 万，但是这个视频点赞到了 100 多万，\n我实在看不明白怎么就这么多点赞的，\n这难道是文化隔离吗？\n#装修灵感库[话题]# #家居审美分享[话题]# #家居作者扶持计划[话题]# #旧房改造[话题]# #旧房翻新[话题]# #天花板[话题]# #文化差异[话题]#",
-      "display_title": "求助！看了百遍，还是不明白它怎么点赞上百万",
-      "image_list": [
-        "https://sns-na-i6.xhscdn.com/1040g2sg31ob256iqlme04a1g6loi09p83nk3of0?imageView2/2/w/1080/format/webp&ap=5&sc=SRH_DTL&sign=955a11deca42699807cd602a3a4e4afa&t=690afbfa"
-      ],
-      "last_update_time": 0,
-      "liked_count": 2018,
-      "nice_count": 26,
-      "nickname": "柠小萌",
-      "note_analysis": {
-        "aesthetics": "美学风格：ins极简风+实用美学，突出旧房改造前后的简洁明亮与功能实用性；拍摄风格：过程化记录+改造前后对比，增强视觉冲击力，符合装修类内容直观展示需求。",
-        "operations": "细分赛道：旧房改造赛道+跨文化视角切入，结合实用改造内容与文化差异引发的好奇心，吸引对装修美学和跨领域内容感兴趣的用户；话术模板：采用“现象描述+提问悬念”模板，以“求助！点赞百万”引发共鸣，提出“文化隔离”疑问制造悬念，激发用户讨论欲。",
-        "summarize": "提供跨文化装修灵感与实用改造思路，点赞百万数据印证内容对用户好奇心与审美需求的精准满足。"
+    "title": "抖音热门手势舞内容分析报告",
+    "posts": [
+      {
+        "entityId": "我会找到逆转时间的公式",
+        "entityType": "keyword",
+        "extra": null,
+        "hotValue": 8040514,
+        "music": null,
+        "note_analysis": {
+          "aesthetics": "美学风格为真实感演出现场，拍摄采用观众视角构图，突出现场氛围与明星魅力，增强真实感和感染力。",
+          "operations": "细分赛道为明星粉丝向情感共鸣内容，特点是围绕明星作品和个人魅力激发粉丝情感。话术模板为“行动+情感目标”式，特点是简短有力，结合明星热点与观众视角引发代入感。",
+          "summarize": "提供情感共鸣价值，明星热点+真实视角数据高，引发粉丝互动与传播。"
+        },
+        "platform": "douyin",
+        "rankPosition": 5,
+        "rankType": "douyin_hot_challenge",
+        "searchContent": [
+          {
+            "authorId": "81445469935",
+            "authorName": "2 1（见过王俊凯版）",
+            "avatarUrl": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-avt-0015_95c357e18035f67892b475af6e0a1044.webp?from=327834062",
+            "collectedCount": null,
+            "commentCount": 1,
+            "contentId": "7585580746657320230",
+            "coverUrl": "https://p3-sign.douyinpic.com/tos-cn-p-0015/oI9eQSC9uAMWriDnALgFaR2UQfy1poEBMCLiKA~tplv-dy-360p.webp?lk3s=138a59ce&x-expires=1767927600&x-signature=RIl4phOnxBPCu%2B4WB2fKAk3zcb8%3D&from=327834062&s=PackSourceEnum_SEARCH_VID&se=false&sc=origin_cover&biz_tag=aweme_video&l=20251226113721CBCF2D2CE78BFF66A71D",
+            "description": "我会找到逆转时间的公式，然后回到你身边#观众视角 #演出现场视频 #王俊凯 #王俊凯话剧 #趁世界还年轻",
+            "duration": 10,
+            "likeCount": 244,
+            "multiImageUrlList": null,
+            "playUrl": [
+              "https://api-play-hl.amemv.com/aweme/v1/play/?video_id=v0200fg10000d52m5q7og65hapjb7d4g&line=0&file_id=13697eb5adb04eb8ad160c80df287f4a&sign=7d911fea37108132cc99216cc79e47fc&is_play_url=1&source=PackSourceEnum_SEARCH"
+            ],
+            "publishTime": 1766155694,
+            "shareCount": 1,
+            "shareUrl": "https://www.iesdouyin.com/share/video/7585580746657320230/?region=US&mid=7582201157947296521&u_code=0&did=MS4wLjABAAAAszCXAnpVN7TPOB4qFnmpFR4pX9lkAryq9ACxmaNnTTJfjq1qbOUXPiKHm3wiFRld&iid=MS4wLjABAAAACCill2fl4wFvMF161kBsj54OTxFYXMzukAcAumH4hf-mOftp8bTOkl4zHL8Xm-Zq&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=dphb9qHQDwNj4OTThy.OtwbdKEOUovW_HrvaDhSDtIY-&share_version=320900&ts=1766720241&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D",
+            "title": "我会找到逆转时间的公式，然后回到你身边#观众视角 #演出现场视频 #王俊凯 #王俊凯话剧 #趁世界还年轻"
+          }
+        ],
+        "title": "我会找到逆转时间的公式"
       },
-      "note_id": "6905815a00000000040214a0",
-      "shared_count": 21,
-      "timestamp": 1761968550000,
-      "type": "video",
-      "update_time": 1761968550000,
-      "userid": "5a867120e8ac2b3002ad2728",
-      "video_download_url": ""
-    },
-    {
-      "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo31cs0mpjv101g5oi81e9k1996tgldqn0?imageView2/2/w/80/format/jpg",
-      "collected_count": 1934,
-      "comments_count": 986,
-      "cover": "https://sns-na-i6.xhscdn.com/1040g2sg31odk1af6g6eg5oi81e9k1996k2hktc0?imageView2/2/w/1080/format/webp&ap=5&sc=SRH_DTL&sign=31c7b2a41e8bb37e04c80ccfbb4c99f0&t=690afbfa",
-      "desc": "被96万网友点赞的适童化的家后续\n大家都说没看够 安排\n后悔了 后悔做的少了 后续更多已经在施工中了期待下\n设计的时候家人朋友听了我的想法都说：小孩长得快，玩不了几年，为什么要浪费这个钱？因为我是她妈妈，我不为娃着想说还为她着想啊？\n童年只有一次，当下快乐最重要，长大了就再改嘛。\n养娃的同时把自己再养一遍\n#适我的家居住提案[话题]# #和我一起长大的家[话题]# #别墅装修[话题]# #梦中情房[话题]# #治愈你的家[话题]# #有孩子的家[话题]# #你梦想中的家是什么样子的[话题]# #儿童房[话题]# #家的一万种可能[话题]# #自设自装[话题]#\n@家居薯 @薯宝宝",
-      "display_title": "被96万网友点赞的适童化的家后续",
-      "image_list": [
-        "https://sns-na-i6.xhscdn.com/1040g2sg31odk1af6g6eg5oi81e9k1996k2hktc0?imageView2/2/w/1080/format/webp&ap=5&sc=SRH_DTL&sign=31c7b2a41e8bb37e04c80ccfbb4c99f0&t=690afbfa",
-        "https://sns-na-i6.xhscdn.com/1040g2sg31odk1af6g6eg5oi81e9k1996k2hktc0?imageView2/2/w/1080/format/webp&ap=5&sc=SRH_DTL&sign=31c7b2a41e8bb37e04c80ccfbb4c99f0&t=690afbfa"
-      ],
-      "last_update_time": 1762142800,
-      "liked_count": 10452,
-      "nice_count": 143,
-      "nickname": "大柱小花家",
-      "note_analysis": {
-        "aesthetics": "温馨治愈风，通过细节展示儿童房布置与家庭空间，色彩柔和，突出家的温暖感与氛围感。",
-        "operations": "细分赛道为有孩家庭儿童房设计，特点是结合儿童需求与家庭生活，兼顾实用性与情感价值，吸引目标家长群体。话术模板采用“他人质疑+个人理念”模式，先以家人“小孩长得快浪费钱”的反对引出观点，再用“童年只有一次，当下快乐最重要”的情感化表达引发共鸣，增强说服力。",
-        "summarize": "提供实用儿童房设计理念与情感共鸣，高数据源于精准定位目标人群，满足需求引发共鸣。"
+      {
+        "entityId": "第一次悸动是你手势舞挑战",
+        "entityType": "keyword",
+        "extra": null,
+        "hotValue": 7614011,
+        "music": null,
+        "note_analysis": {
+          "aesthetics": "美学技法：拍摄对象为偶像手势舞演示，风格为“活力动感风”；拍摄构图采用近景特写，突出手部动作细节，色彩以亮色为主，搭配粉色、白色等柔和色调，增强视觉吸引力。",
+          "operations": "运营技法：细分赛道为“偶像/明星手势舞挑战”，特点是围绕特定偶像或明星的热门手势舞进行二次创作，利用粉丝经济吸引目标受众；话术模板为“情感符号+明星/偶像标签+挑战话题”，特点是通过表情符号增强情感表达，标签化明星和挑战主题，精准触达粉丝群体。",
+          "summarize": "提供偶像手势舞教学与情感共鸣价值，高互动量（评论82）、点赞（2282）、分享（56）验证其对粉丝群体的有效触达。"
+        },
+        "platform": "douyin",
+        "rankPosition": 11,
+        "rankType": "douyin_hot_challenge",
+        "searchContent": [
+          {
+            "authorId": "2728342249560234",
+            "authorName": "奔赴少年CIIU",
+            "avatarUrl": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-avt-0015_86d27d832498fcd640de15618f38cf55.webp?from=327834062",
+            "collectedCount": null,
+            "commentCount": 82,
+            "contentId": "7586645028829170998",
+            "coverUrl": "https://p3-sign.douyinpic.com/tos-cn-p-0015/oUY1I4ijzKDeGKrJABBAI0S798pgLBpAUSimfB~tplv-dy-360p.webp?lk3s=138a59ce&x-expires=1767927600&x-signature=ipKEIRBS4aOhby3W%2F3u0C79qZco%3D&from=327834062&s=PackSourceEnum_SEARCH_VID&se=false&sc=origin_cover&biz_tag=aweme_video&l=20251226113742CD3B7A95B721525DB854",
+            "description": "喜欢你🐰💖#第一次悸动是你手势舞 #星动营业中 #高能偶像派对  #奔赴少年CIIU #白元昊",
+            "duration": 13,
+            "likeCount": 2282,
+            "multiImageUrlList": null,
+            "playUrl": [
+              "https://api-play-hl.amemv.com/aweme/v1/play/?video_id=v0300fg10000d54iqffog65ru2kraas0&line=0&file_id=3218d226d6194d87847d4c4fe3329b24&sign=7290a54e4cc6008c6ca7f3236eb74600&is_play_url=1&source=PackSourceEnum_SEARCH"
+            ],
+            "publishTime": 1766403463,
+            "shareCount": 56,
+            "shareUrl": "https://www.iesdouyin.com/share/video/7586645028829170998/?region=US&mid=7584829234229856257&u_code=0&did=MS4wLjABAAAAhdTpQddR3VUvpxHfPpETJQJpOLyMY4NhkX1CXIpUjoI&iid=MS4wLjABAAAAAIM1X-4SmRt9SQESz28XdeeTH8sf3Zg1OGN886TPvr8&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=iLrHmM7G0U8trfPHtJcBTYVjvkGjXViuBUQnByaLG1E-&share_version=320900&ts=1766720263&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D",
+            "title": "喜欢你🐰💖#第一次悸动是你手势舞 #星动营业中 #高能偶像派对  #奔赴少年CIIU #白元昊"
+          }
+        ],
+        "title": "第一次悸动是你手势舞挑战"
       },
-      "note_id": "690820680000000004023675",
-      "shared_count": 6652,
-      "timestamp": 1762158154000,
-      "type": "video",
-      "update_time": 1762158154000,
-      "userid": "62480b93000000001000a526",
-      "video_download_url": ""
-    }
-  ],
-  "title": "小红书家居领域热点分析：风格融合、改造创新与适童化需求"
+      {
+        "entityId": "TF四代适合不适合舞蹈挑战",
+        "entityType": "keyword",
+        "extra": null,
+        "hotValue": 7302557,
+        "music": null,
+        "note_analysis": {
+          "aesthetics": "拍摄风格为日常向vlog感，舞蹈动作拆解清晰，穿搭简约潮流，符合年轻受众审美",
+          "operations": "细分赛道为“明星衍生内容-偶像舞蹈”，特点是聚焦特定偶像团体，满足粉丝对成员舞蹈能力的讨论需求；话术模板为“粉丝互动提问式+歌曲推荐”，特点是通过“您点的XX已送达”引发粉丝参与感，结合新歌推广增强吸引力",
+          "summarize": "通过粉丝互动和热门话题结合，提供舞蹈内容价值，带动高点赞评论分享数据"
+        },
+        "platform": "douyin",
+        "rankPosition": 16,
+        "rankType": "douyin_hot_challenge",
+        "searchContent": [
+          {
+            "authorId": "1207680821110307",
+            "authorName": "努力学会卷头发",
+            "avatarUrl": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-avt-0015_28d2e6aa8198be7acbcd0bb30ef2d55f.webp?from=327834062",
+            "collectedCount": null,
+            "commentCount": 218,
+            "contentId": "7586664054182628657",
+            "coverUrl": "https://p26-sign.douyinpic.com/tos-cn-p-0015c000-ce/oIWJxOei93eXAILImCi0APpBwGe95EstPJpAv0~tplv-dy-360p.webp?lk3s=138a59ce&x-expires=1767927600&x-signature=j%2Br0j8iWRfctqZoWtL1sR5WM2Jc%3D&from=327834062&s=PackSourceEnum_SEARCH_VID&se=false&sc=origin_cover&biz_tag=aweme_video&l=20251226113802BF2268F366C1815F051A",
+            "description": "您点的小四四“适合，不适合”已送达💗新歌好听呢今天穿PSO ⌯>ᴗo⌯ಣ#原创#适合不适合#TF家族四代   #手势舞#抖音热门舞蹈计划 @抖音小助手@抖音创作灵感 @抖音能量站",
+            "duration": 16,
+            "likeCount": 13986,
+            "multiImageUrlList": null,
+            "playUrl": [
+              "https://api-play-hl.amemv.com/aweme/v1/play/?video_id=v1e00fgi0000d54jth7og65k7dquum30&line=0&file_id=e040c357fafa47f48d02230b66f21cfb&sign=2e76b96706a0f78e0d56e8df40d1e6a5&is_play_url=1&source=PackSourceEnum_SEARCH"
+            ],
+            "publishTime": 1766407889,
+            "shareCount": 2367,
+            "shareUrl": "https://www.iesdouyin.com/share/video/7586664054182628657/?region=US&mid=7586664081374169906&u_code=0&did=MS4wLjABAAAAIoI4wnreSiYAf30QXIuU9cRPxPcL_w3Gobp2ftGCCh3Er7C7JPcfl2rl0PuCBySH&iid=MS4wLjABAAAAhye_X8ywb15DeJn3YSjBAH5hosjXdAOVv548i3CsFgIj4os1-JpOMF6QxpLPr-UK&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=1bYV3A9aAiBdNMNqMS857ZTr9LVZYaMqDFmizVBEye4-&share_version=320900&ts=1766720283&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D",
+            "title": "您点的小四四“适合，不适合”已送达💗新歌好听呢今天穿PSO ⌯>ᴗo⌯ಣ#原创#适合不适合#TF家族四代   #手势舞#抖音热门舞蹈计划 @抖音小助手@抖音创作灵感 @抖音能量站"
+          }
+        ],
+        "title": "TF四代适合不适合舞蹈挑战"
+      }
+    ]
+  }
 }
