@@ -12,8 +12,8 @@ function App() {
   // posts[].searchContent[] 包含视频内容
   const toolOutput = useWidgetProps({});
   const displayMode = useOpenAiGlobal("displayMode");
-  //const isFullscreen = displayMode === "fullscreen";
-  const isFullscreen = true;
+  const isFullscreen = displayMode === "fullscreen";
+  //const isFullscreen = true;
   
   // 图片查看器状态
   const [viewingImage, setViewingImage] = useState(null);
@@ -292,7 +292,7 @@ function App() {
                           {post.image_list.slice(0, 6).map((img, idx) => (
                             <div 
                               key={idx} 
-                              className={`relative bg-gray-100 ${imageCount === 1 ? 'rounded-3xl' : 'rounded-xl'} overflow-hidden ${imageCount === 1 ? 'w-[60%]' : 'w-full'} cursor-pointer`}
+                              className={`relative bg-gray-100 ${imageCount === 1 ? 'rounded-3xl' : 'rounded-xl'} overflow-hidden ${imageCount === 1 ? 'w-[80%]' : 'w-full'} cursor-pointer`}
                               onClick={() => isFullscreen && setViewingImage(img)}
                             >
                               <img
