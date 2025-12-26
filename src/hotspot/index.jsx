@@ -12,8 +12,8 @@ function App() {
   // posts[].searchContent[] 包含视频内容
   const toolOutput = useWidgetProps({});
   const displayMode = useOpenAiGlobal("displayMode");
-  const isFullscreen = displayMode === "fullscreen";
-  //const isFullscreen = true;
+  //const isFullscreen = displayMode === "fullscreen";
+  const isFullscreen = true;
   
   // 图片查看器状态
   const [viewingImage, setViewingImage] = useState(null);
@@ -267,7 +267,7 @@ function App() {
                     if (post.isVideo && post.videoUrl) {
                       return (
                         <div className="flex justify-center">
-                          <div className="relative bg-gray-100 rounded-3xl overflow-hidden w-[60%]" style={{ pointerEvents: 'auto' }}>
+                          <div className="relative bg-gray-100 rounded-3xl overflow-hidden w-[80%]" style={{ pointerEvents: 'auto' }}>
                             <video
                               src={post.videoUrl}
                               className="w-full h-auto object-cover"
